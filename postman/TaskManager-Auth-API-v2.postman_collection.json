@@ -37,7 +37,7 @@
       "response": []
     },
     {
-      "name": "Register successful",
+      "name": "Registration successful with valid information",
       "event": [
         {
           "listen": "test",
@@ -82,7 +82,7 @@
       "response": []
     },
     {
-      "name": "Register with an existing email address.",
+      "name": "Registration failed with an existing email address",
       "request": {
         "method": "POST",
         "header": [],
@@ -110,7 +110,7 @@
       "response": []
     },
     {
-      "name": "Register with password = 5 character",
+      "name": "Registration failed with password = 5 characters",
       "request": {
         "method": "POST",
         "header": [],
@@ -138,7 +138,7 @@
       "response": []
     },
     {
-      "name": "Register with password = 6 character",
+      "name": "Registration successful with a 6-character password",
       "request": {
         "method": "POST",
         "header": [],
@@ -166,7 +166,7 @@
       "response": []
     },
     {
-      "name": "Register with password = 9 character",
+      "name": "Registration successful with a 9-character password",
       "request": {
         "method": "POST",
         "header": [],
@@ -194,7 +194,7 @@
       "response": []
     },
     {
-      "name": "Register with password = 12 character",
+      "name": "Registration successful with a 12-character password",
       "request": {
         "method": "POST",
         "header": [],
@@ -222,7 +222,7 @@
       "response": []
     },
     {
-      "name": "Register with password = 13 character",
+      "name": "Registration failed with password = 13 characters",
       "request": {
         "method": "POST",
         "header": [],
@@ -250,7 +250,7 @@
       "response": []
     },
     {
-      "name": "Register with password < 6 character",
+      "name": "Registration failed with password less than 6 characters",
       "request": {
         "method": "POST",
         "header": [],
@@ -278,7 +278,7 @@
       "response": []
     },
     {
-      "name": "Register with password > 12 character",
+      "name": "Registration failed with password > 12 characters",
       "request": {
         "method": "POST",
         "header": [],
@@ -306,7 +306,7 @@
       "response": []
     },
     {
-      "name": "Account registration is missing the full_name field.",
+      "name": "Registration failed because the full_name field was left blank",
       "request": {
         "method": "POST",
         "header": [],
@@ -334,7 +334,7 @@
       "response": []
     },
     {
-      "name": "Registering with an email address in the wrong format",
+      "name": "Registration failed due to incorrect email format",
       "request": {
         "method": "POST",
         "header": [],
@@ -362,7 +362,7 @@
       "response": []
     },
     {
-      "name": "Login successful",
+      "name": "Login successful with valid information",
       "event": [
         {
           "listen": "test",
@@ -418,7 +418,7 @@
       "response": []
     },
     {
-      "name": "Logging with the wrong password.",
+      "name": "Login failed with incorrect password",
       "event": [
         {
           "listen": "test",
@@ -474,7 +474,7 @@
       "response": []
     },
     {
-      "name": "Check registered accounts",
+      "name": "Account verification successful with a valid token",
       "request": {
         "auth": {
           "type": "bearer",
@@ -509,7 +509,7 @@
       "response": []
     },
     {
-      "name": "Check registered accounts not token",
+      "name": "Account verification failed with the token was left blank",
       "request": {
         "method": "GET",
         "header": [],
@@ -528,7 +528,7 @@
       "response": []
     },
     {
-      "name": "Check registered accounts wrong token",
+      "name": "Account verification failed with invalid token",
       "request": {
         "auth": {
           "type": "noauth"
