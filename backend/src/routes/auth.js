@@ -11,13 +11,17 @@ const router = express.Router();
 router.post('/register', async (req, res) => {
   const { email, password, full_name } = req.body;
 
-  // Validation co ban - day la noi nhieu bug "thieu kiem tra dau vao" hay xay ra
+  // Validation co ban 
   if (!email || !password || !full_name) {
     return res.status(400).json({ error: 'Thieu email, password hoac full_name' });
   }
 
   if (password.length < 6) {
     return res.status(400).json({ error: 'Password phai co it nhat 6 ky tu' });
+  }
+
+  if (password.length > 12) {
+    return res.status(400).json({ error: 'Password phai co toi da 12 ky tu' });
   }
 
   // Kiem tra dinh dang email co ban
