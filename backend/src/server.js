@@ -4,6 +4,7 @@ const cors = require('cors');
 const { initSchema } = require('./db/init');
 
 const authRoutes = require('./routes/auth');
+const groupRoutes = require('./routes/groups');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.get('/api/health', (req, res) => {
 
 // Gan cac route theo tung nhom chuc nang
 app.use('/api/auth', authRoutes);
+app.use('/api/groups', groupRoutes);
 
 app.listen(PORT, () => {
   console.log(`[Server] Dang chay tai http://localhost:${PORT}`);

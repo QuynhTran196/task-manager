@@ -1,0 +1,956 @@
+{
+  "info": {
+    "_postman_id": "26e31f5c-7e9d-4a21-95ca-8075e22e92b5",
+    "name": "Epic2-TaskManager-Groups-API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "38820824"
+  },
+  "item": [
+    {
+      "name": "Check sever is alive",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"text\": \"Hãy dùng terminal liệt kê cho tôi xem trong thư mục hiện tại có những file và folder nào (dùng lệnh dir nhé)\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/health",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Registration successful with manager account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "if (data.token) {\r",
+              "    pm.environment.set(\"manager_token\", data.token);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"testmanager@gmail.com\", \"password\": \"Abc123456\", \"full_name\": \"Manager\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Registration successful with manager account Copy",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "if (data.token) {\r",
+              "    pm.environment.set(\"member_token\", data.token);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\": \"testmember1@gmail.com\", \"password\": \"Abc123456\", \"full_name\": \"Abc123456\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/auth/register",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Group created successfully with valid information.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "if (data.group) {\r",
+              "    pm.environment.set(\"group_id\", data.group.id);\r",
+              "    console.log(\"Group ID đã lưu:\", data.group.id);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Group\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create a failed group with the name field left blank",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "if (data.group) {\r",
+              "    pm.environment.set(\"group_id\", data.group.id);\r",
+              "    console.log(\"Group ID đã lưu:\", data.group.id);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Creating a group failed with not logged-in accounts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const data = pm.response.json();\r",
+              "if (data.group) {\r",
+              "    pm.environment.set(\"group_id\", data.group.id);\r",
+              "    console.log(\"Group ID đã lưu:\", data.group.id);\r",
+              "}"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Successfully invited a member to the group with a valid email address",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"testmember1@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/{{group_id}}/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "{{group_id}}",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Member invitation failed because the email address does not exist in the system",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"testmember10@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/{{group_id}}/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "{{group_id}}",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Inviting members failed when the group no longer existed",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"testmember1@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/20/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "20",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Inviting members failed when using a member's account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{member_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/{{group_id}}/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "{{group_id}}",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Inviting a member fails when inviting using ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"test_1782290378@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/{{group_id}}/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "{{group_id}}",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Inviting a member fails when using full_name",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"full_name\": \"Abc123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/{{group_id}}/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "{{group_id}}",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Inviting a member fails when the member is already a member of the group",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"testmember1@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/{{group_id}}/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "{{group_id}}",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "View all the groups that the user has successfully joined",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Group\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "View a list of successful team members with valid information",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/3/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "3",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "View the list of team members who failed due to invalid information",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{auth_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/groups/1/members",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "1",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Member removed from group successfully with valid information",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/groups/3/members/10",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "3",
+            "members",
+            "10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Removing a member from a group fails when the group no longer exists",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/groups/20/members/10",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "20",
+            "members",
+            "10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Remove failed when userId does not belong to the group",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/groups/3/members/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "3",
+            "members",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Removing a member from a group fails when using the member's account",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{member_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/groups/3/members/9",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "3",
+            "members",
+            "9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Removing failure when a manager tries to remove themselves",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/groups/3/members/9",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "groups",
+            "3",
+            "members",
+            "9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "View the list of failed members when the group does not exist",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{manager_token}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}} /api/groups/999/members",
+          "host": [
+            "{{base_url}} "
+          ],
+          "path": [
+            "api",
+            "groups",
+            "999",
+            "members"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
