@@ -5,6 +5,7 @@ const { initSchema } = require('./db/init');
 
 const authRoutes = require('./routes/auth');
 const groupRoutes = require('./routes/groups');
+const taskRoutes = require('./routes/tasks');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,8 @@ app.get('/api/health', (req, res) => {
 // Gan cac route theo tung nhom chuc nang
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
+app.use('/api/tasks', taskRoutes);   // /api/tasks/:taskId, /api/tasks/my
+app.use('/api/groups', taskRoutes);  // /api/groups/:groupId/tasks
 
 app.listen(PORT, () => {
   console.log(`[Server] Dang chay tai http://localhost:${PORT}`);
