@@ -154,7 +154,7 @@ router.get('/my', (req, res) => {
 
 // ============ PATCH /api/tasks/:taskId ============
 // Sua task: manager sua duoc tat ca, member chi sua duoc status cua task duoc giao cho minh
-router.patch('/:taskId', (req, res) => {
+router.patch('/:taskId', (req, res) => {  
   const { taskId } = req.params;
   const requester_id = req.user.id;
   const { title, description, deadline, priority, status, assigned_to, attachment } = req.body;

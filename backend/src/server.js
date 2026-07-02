@@ -25,7 +25,7 @@ app.get('/api/health', (req, res) => {
 // Gan cac route theo tung nhom chuc nang
 app.use('/api/auth', authRoutes);
 app.use('/api/groups', groupRoutes);
-app.use('/api/tasks', taskRoutes);   // /api/tasks/:taskId, /api/tasks/my
+app.use('/api/tasks', taskRoutes);   // /api/tasks/:taskId, /api/tasks/my //neu URL bat dau bang /api/task, cat phan do di rôi chuyen phan con lại vao taskRoutes xu ly tiep
 app.use('/api/groups', taskRoutes);  // /api/groups/:groupId/tasks
 
 app.listen(PORT, () => {

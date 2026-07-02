@@ -51,9 +51,9 @@
 | TC_17 | Fail to update task when task is not assigned to member | `testmember1@gmail.com` logged in with valid `{{member_token}}`. Task `{{task_id}}` exists but `assigned_to` ≠ `member_id` | Send `PATCH {{base_url}}/api/tasks/{{task_id}}` with `{{member_token}}`. Body: `{"title": "Fix input field bug"}` | `403 Forbidden`, `error: "Ban chi co the cap nhat task duoc giao cho minh"` | `403 Forbidden`, `error: "Ban chi co the cap nhat task duoc giao cho minh"` | Pass |
 | TC_18 | Fail to update task with invalid status value | `testmember1@gmail.com` logged in with valid `{{member_token}}`. Task `{{task_id}}` exists and is assigned to member. Valid statuses: `pending`, `in_progress`, `completed` | Send `PATCH {{base_url}}/api/tasks/{{task_id}}` with `{{member_token}}`. Body: `{"status": "TestAPI"}` | `400 Bad Request`, `error: "Status khong hop le"` | `400 Bad Request`, `error: "Status khong hop le"` | Pass |
 | TC_19 | Fail to update task with invalid priority value | `testmanager@gmail.com` logged in with valid `{{manager_token}}`. Task `{{task_id}}` exists. Valid priorities: `low`, `medium`, `high` | Send `PATCH {{base_url}}/api/tasks/{{task_id}}` with `{{manager_token}}`. Body: `{"priority": "TestAPI"}` | `400 Bad Request`, `error: "Priority chi duoc la low, medium hoac high"` | `400 Bad Request`, `error: "Priority chi duoc la low, medium hoac high"` | Pass |
-| TC_40 | Delete task successfully using Manager account | `testmanager@gmail.com` logged in with valid `{{manager_token}}`. Task exists | Send `DELETE {{base_url}}/api/tasks/{{task_id}}` with `{{manager_token}}` | `200 OK`, `message: "Da xoa task thanh cong"` | | |
-| TC_41 | Fail to delete task using Member account | `testmember1@gmail.com` logged in with valid `{{member_token}}`. Task exists | Send `DELETE {{base_url}}/api/tasks/{{task_id}}` with `{{member_token}}` | `403 Forbidden`, `error: "Chi truong nhom moi co quyen xoa task"` | | |
-| TC_42 | Fail to delete task when task does not exist | `testmanager@gmail.com` logged in with valid `{{manager_token}}`. Task ID 99 does not exist | Send `DELETE {{base_url}}/api/tasks/99` with `{{manager_token}}` | `404 Not Found`, `error: "Task khong ton tai"` | | |
+| TC_40 | Delete task successfully using Manager account | `testmanager@gmail.com` logged in with valid `{{manager_token}}`. Task ID 1 exists | Send `DELETE {{base_url}}/api/tasks/1` with `{{manager_token}}` | `200 OK`, `message: "Da xoa task thanh cong"` | `200 OK`, `message: "Da xoa task thanh cong"` | Pass |
+| TC_41 | Fail to delete task using Member account | `testmember1@gmail.com` logged in with valid `{{member_token}}`. Task ID 2 exists | Send `DELETE {{base_url}}/api/tasks/2` with `{{member_token}}` | `403 Forbidden`, `error: "Chi truong nhom moi co quyen xoa task"` | `403 Forbidden`, `error: "Chi truong nhom moi co quyen xoa task"` | Pass |
+| TC_42 | Fail to delete task when task does not exist | `testmanager@gmail.com` logged in with valid `{{manager_token}}`. Task ID 1 was already deleted in TC_40 | Send `DELETE {{base_url}}/api/tasks/1` with `{{manager_token}}` | `404 Not Found`, `error: "Task khong ton tai"` | `404 Not Found`, `error: "Task khong ton tai"` | Pass |
 
 ---
 
@@ -88,8 +88,7 @@
 | | Count |
 |---|---|
 | Total test cases | 42 |
-| Pass | 39 |
-| Pending (DELETE task — TC_40, TC_41, TC_42) | 3 |
+| Pass | 42 |
 | Fail | 0 |
 
 **Techniques applied:**

@@ -4,7 +4,7 @@ const { authMiddleware } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Tat ca route trong file nay deu yeu cau dang nhap
+// Tat ca route trong file nay deu yeu cau dang nhap, bat buoc co token 
 router.use(authMiddleware);
 
 // ============ POST /api/groups ============
